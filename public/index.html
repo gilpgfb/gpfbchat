@@ -56,8 +56,8 @@
       /** Agrega un usuario a la base de datos. */
       function agrega() {
         /* "MENSAJE" es el nombre de la colección a la que se agregan los datos.
-         * "USUARIO", "TEXTO" y "TIMESTAMP" son los nombres de los campos
-         * en el documentos.
+         * "USUARIO", "TEXTO" y "TIMESTAMP" son los nombres de los campos en el
+         * documento.
          * El timestamp contiene la fecha y hora en que se agrega el registro.*/
         firestore.collection("MENSAJE").add({
           USUARIO: usuario,
