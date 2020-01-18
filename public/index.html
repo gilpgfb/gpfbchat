@@ -38,7 +38,7 @@
       auth.onAuthStateChanged(
         /** Recibe las características del usuario o null si no ha iniciado
          * sesión. */
-        async usuarioAuth => {
+        usuarioAuth => {
           if (usuarioAuth && usuarioAuth.email) {
             // Usuario aceptado.
             usuario = usuarioAuth.email;
@@ -46,7 +46,7 @@
             muestraMensajes();
           } else {
             // No ha iniciado sesión. Pide datos para iniciar sesión.
-            await auth.signInWithRedirect(provider);
+            auth.signInWithRedirect(provider);
           }
         },
         // Función que se invoca si hay un error al verificar el usuario.
