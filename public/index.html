@@ -17,7 +17,9 @@
       <input id="texto" type="text" required placeholder="Mensaje">
       <button>Enviar</button>
     </form>
-    <ol id="mensajes"><li><progress max="100">Cargando…</progress></li></ol>
+    <ul id="mensajes">
+      <li><progress max="100">Cargando…</progress></li>
+    </ul>
     <script>
       // @ts-check
       /** Nombre de usuario atenticado por Firebase. */
@@ -78,23 +80,33 @@
             /** Función que muestra los datos enviados por el servidor. Si los
              * datos cambian en el servidor, se vuelve a invocar esta función y
              * recibe los datos actualizados.
-             * @param {Array} querySnapshot estructura parecida a un Array, que
+             * @param {Object} querySnapshot estructura parecida a un Array, que
              * contiene una copia de los datos en el servidor. */
             querySnapshot => {
               // Vacía la lista con los mensajes.
               // @ts-ignore
               mensajes.innerHTML = "";
-              /* Revisa un por uno los registros de la consulta y los muestra.
-               * El iterador "doc" es un registro de la base de datos. */
-              querySnapshot.forEach(doc => {
-                // recupera los datos almacenados en el registro.
-                const data = doc.data();
-                /* Agrega un li con los datos del registro, que se codifican
-                 * para evitar inyección de código. */
+              if (querySnapshot.size > 0) {
+                /* Cuando el número de registros devueltos por la consulta es
+                 * mayor que 0, Revisa un por uno los registros de la consulta y
+                 * los muestra. El iterador "doc" apunta a un registro de la
+                 * base de datos. */
+                querySnapshot.forEach(doc => {
+                  // recupera los datos almacenados en el registro.
+                  const data = doc.data();
+                  /* Agrega un li con los datos del registro, que se codifican
+                   * para evitar inyección de código. */
+                  // @ts-ignore
+                  mensajes.innerHTML += /* html */
+                    `<li><b>${cod(data.USUARIO)}</b><br>${cod(data.TEXTO)}</li>`;
+                })
+              } else {
+                /* Cuando el número de registros devueltos por la consulta es
+                 * mayor que 0, agrega un texto HTML. */
                 // @ts-ignore
                 mensajes.innerHTML += /* html */
-                  `<li><b>${cod(data.USUARIO)}</b><br>${cod(data.TEXTO)}</li>`;
-              })
+                  `<li>No hay menajes registrados.</li>`;
+              }
             },
             /* Función que se invoca cuando hay un error. Muestra el error. Al
              * invocar esta función la conexión se cancela. Por lo mismo, se
