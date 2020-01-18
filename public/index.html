@@ -74,7 +74,7 @@
       function muestraMensajes() {
         /* Consulta que se actualiza automáticamente. Pide todos los registros
          * de la colección "MENSAJE" ordenador por el campo "TIMESTAMP" de forma
-         * descendiente. */
+         * descendente. */
         firestore.collection("MENSAJE").orderBy("TIMESTAMP", "desc")
           .onSnapshot(
             /** Función que muestra los datos enviados por el servidor. Si los
